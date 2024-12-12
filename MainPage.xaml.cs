@@ -1,24 +1,30 @@
-﻿namespace MSIMAU;
+﻿using Microsoft.Maui.Controls;
+using MSIMAU.Services;
+
+namespace MSIMAU;
 
 public partial class MainPage : ContentPage
 {
-	int count = 0;
+	private MidiService _midiService;
 
 	public MainPage()
 	{
+		 
+		_midiService=new MidiService();
 		InitializeComponent();
+		this.Loaded += (sender, e) =>
+		{
+			//MainPageWindow.MaximumWidthRequest = this.WidthRequest;
+			//MainPageWindow.MinimumHeightRequest = this.HeightRequest;
+			// Your initialization or handling code here
+		};
+		this.LayoutChanged += (sender, e) =>
+        {
+	        MainPageWindow.MaximumWidthRequest = this.WidthRequest;
+	        MainPageWindow.MinimumHeightRequest = this.HeightRequest;
+        };
 	}
 
-	private void OnCounterClicked(object sender, EventArgs e)
-	{
-		count++;
-
-		if (count == 1)
-			CounterBtn.Text = $"Clicked {count} time";
-		else
-			CounterBtn.Text = $"Clicked {count} times";
-
-		SemanticScreenReader.Announce(CounterBtn.Text);
-	}
+	
 }
 
